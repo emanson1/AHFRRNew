@@ -8,13 +8,17 @@ import Navigation from './Pages/Navigation';
 import ModalRoot from './Shared/ModalRoot';
 import MainPage from './Pages/MainPage';
 import { Routes, Route } from 'react-router-dom';
+import { makeStyles } from '@mui/styles';
 function App(props) {
   const { modalProps } = props;
   const { modalType, open } = modalProps;
   
   const [openNav, setOpen] = useState(false);
   const [curWindow, setCurWindow] = useState(<Home />);
+  
+
   return (
+    
     <React.Fragment>
       <Routes>
         {/* In v6, use 'element' instead of 'render' */}

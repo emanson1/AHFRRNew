@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Grid, Box, Typography } from '@mui/material ';
-import { makeStyles } from '@mui/material /styles';
+import { Grid, Box, Typography } from '@mui/material';
+import { makeStyles } from '@mui/material/styles';
 import AccountBoxIcon from '@mui/icons-material/AccountBox';
 import { connect } from 'react-redux';
 const useStyles = makeStyles((theme) => ({

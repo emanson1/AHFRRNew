@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { makeStyles } from '@mui/material /styles';
-import AppBar from '@mui/material /AppBar';
-import Tabs from '@mui/material /Tabs';
-import Tab from '@mui/material /Tab';
+import { makeStyles } from '@mui/material/styles';
+import AppBar from '@mui/material/AppBar';
+import Tabs from '@mui/material/Tabs';
+import Tab from '@mui/material/Tab';
 import DescriptionIcon from '@material-ui/icons/Description';
 import ShowChartIcon from '@material-ui/icons/ShowChart';
 import PersonPinIcon from '@material-ui/icons/PersonPin';
@@ -11,7 +11,7 @@ import HelpIcon from '@material-ui/icons/Help';
 import ShoppingBasket from '@material-ui/icons/ShoppingBasket';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import ThumbUp from '@material-ui/icons/ThumbUp';
-import Typography from '@mui/material /Typography';
+import Typography from '@mui/material/Typography';
 import Box from '@mui/material /Box';
 import * as Constants from '../Shared/Constants';
 
