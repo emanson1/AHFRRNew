@@ -12,7 +12,6 @@ import { makeStyles } from '@mui/styles';
 function App(props) {
   const { modalProps = {} } = props;
   const { modalType, open } = modalProps;
-  
   const [openNav, setOpen] = useState(false);
   const [curWindow, setCurWindow] = useState(<Home />);
   
