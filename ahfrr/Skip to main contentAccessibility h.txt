@@ -1,0 +1,518 @@
+Skip to main contentAccessibility help
+Accessibility feedback
+AI Mode
+All
+Forums
+Shopping
+Web
+More
+
+
+
+applyMiddleware.ts:54 Uncaught TypeError: middleware is not a function
+    at configureStore (configureStore.js:27:1)
+    at ./src/index.js (index.js:20:1)
+    at options.factory (react refresh:37:1)
+    at __webpack_require__ (bootstrap:28:1)
+    at startup:7:1
+    at startup:7:1
+This error occurs when a value passed to the middleware option in your Redux store configuration is undefined or is not a function. This most commonly happens due to breaking changes in newer versions of libraries like redux-thunk or redux-logger. 
+Common Causes & Fixes
+Redux-Thunk Named Export (v3.0+)
+In redux-thunk version 3 and above, the middleware is no longer a default export.
+Incorrect: import thunk from 'redux-thunk'
+Correct: import { thunk } from 'redux-thunk'
+Redux-Logger Initialization
+If you are using redux-logger, you must call the createLogger function rather than passing the import directly.
+Incorrect: middleware: [logger]
+Correct: middleware: [createLogger()]
+Mixing configureStore with applyMiddleware
+If you are using Redux Toolkit's configureStore, you should not use the legacy applyMiddleware function. configureStore handles middleware application internally.
+Incorrect: middleware: applyMiddleware(thunk)
+Correct:
+javascript
+const store = configureStore({
+  reducer: rootReducer,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(yourCustomMiddleware),
+})
+```
+
+Use code with caution.
+ 
+Stack Overflow
+Stack Overflow
+ +7
+How to Debug
+Check your configureStore.js at line 27. Look at the array or function you are passing to the middleware property. Print each item in that array to the console; if any are undefined, your import statement is likely wrong. 
+Stack Overflow
+Stack Overflow
+ +1
+For more details on the modern setup, refer to the Redux Toolkit configureStore documentation. 
+Would you like me to check your specific import statements or configureStore code if you can provide a snippet?
+
+
+
+
+
+
+
+
+
+10 sites
+TypeError: middleware is not a function (it is undefined)
+Jan 13, 2024 — 2 Answers. Sorted by: 20. This problem will be solved like this. Problem in this line. import thunk from 'redux-thunk' Just replac...
+
+Stack Overflow
+Redux thunk - Uncaught TypeError: middleware is not a function
+Jul 30, 2024 — 1 Answer. ... The error you have typically manifests when importing Thunk incorrectly. thunk is a named export in the current vers...
+
+Stack Overflow
+passing middle ware to redux store using configure store ...
+Mar 13, 2023 — passing middle ware to redux store using configure store function. ... import React from 'react'; import ReactDOM from 'react-dom/
+
+Stack Overflow
+Show all
+Can you rewrite this and make it work?
+const store = configureStore({ reducer: rootReducer, middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(yourCustomMiddleware), }); return createStore( createRootReducer(history), initialState, compose(applyMiddleware(...middleware), ...enhancers) )
+The error occurs because you are mixing Redux Toolkit's configureStore with the legacy Redux createStore and applyMiddleware. In modern Redux, configureStore handles all middleware and enhancers internally, so you should not call createStore or applyMiddleware manually. 
+Redux
+Redux
+ +3
+The Correct Rewrite
+Replace your entire store configuration logic with this single configureStore call: 
+javascript
+import { configureStore } from '@reduxjs/toolkit';
+
+const store = configureStore({
+  // 1. Pass your combined root reducer
+  reducer: createRootReducer(history),
+  
+  // 2. Set initial state if provided
+  preloadedState: initialState,
+
+  // 3. Add custom middleware (Redux Toolkit adds Thunk by default)
+  middleware: (getDefaultMiddleware) => 
+    getDefaultMiddleware().concat(yourCustomMiddleware),
+
+  // 4. Add custom enhancers
+  enhancers: (getDefaultEnhancers) => 
+    getDefaultEnhancers().concat(...enhancers),
+    
+  // DevTools is enabled by default in development
+});
+
+export default store;
+Use code with caution.
+Why this works:
+Automatic Middleware Injection: configureStore automatically calls applyMiddleware for you.
+Default Middleware: Using getDefaultMiddleware().concat(...) ensures you keep useful defaults like redux-thunk and development-mode checks (e.g., for state mutation).
+Simplification: It replaces the need for compose, applyMiddleware, and createStore entirely. 
+Redux Toolkit
+Redux Toolkit
+ +4
+Troubleshooting Imports
+If yourCustomMiddleware is still throwing an error, check its import source. If it is redux-logger, ensure you are calling it as a function: concat(createLogger()). If it is redux-thunk (v3+), ensure you use the named export: import { thunk } from 'redux-thunk'. 
+Do you have other custom enhancers (like redux-persist or redux-offline) that might need specific configuration?
+
+
+
+
+
+
+
+
+
+9 sites
+Usage Guide - Redux Toolkit
+Dec 11, 2024 — If you need to customize the store setup, you can pass additional options. Here's what the hot reloading example might look like u...
+
+
+Redux Toolkit
+configureStore - Redux Toolkit
+Mar 16, 2026 — Legacy Redux usage patterns typically required several dozen lines of copy-pasted boilerplate to achieve this. Redux Toolkit's con...
+
+
+Redux Toolkit
+getDefaultMiddleware | Redux Toolkit
+Jan 29, 2024 — Intended Usage​ By default, configureStore adds some middleware to the Redux store setup automatically. const store = configureSto...
+
+
+Redux Toolkit
+Show all
+thank you very much.
+You're very welcome! I'm glad we could get that store configuration cleaned up for you.
+Since you’re using the modern configureStore pattern now, you might find that you no longer need extra boilerplate like redux-devtools-extension or manual thunk setup—it’s all baked right in.
+Are you all set to start building out your slices, or is there another part of the Redux setup giving you trouble?
+
+
+
+
+
+Not at the moment. Thank you again.
+You're very welcome! Glad I could help get your store running smoothly.
+Whenever you're ready to dive into Redux Toolkit Slices or need a hand with RTK Query, feel free to reach out.
+Happy coding!
+
+
+
+
+
+
+What are some other common Redux Toolkit errors?
+
+What are some best practices for naming Redux reducers and actions?
+
+How do I handle asynchronous actions with Redux Toolkit?
+What is my best move here to get the history peer dependecy fixed: npm error ERESOLVE could not resolve npm error npm error While resolving: connected-react-router@6.9.3 npm error Found: history@5.3.0 npm error node_modules/history npm error history@"^5.3.0" from the root project npm error npm error Could not resolve dependency: npm error peer history@"^4.7.2" from connected-react-router@6.9.3 npm error node_modules/connected-react-router npm error connected-react-router@"^6.9.3" from the root project npm error npm error Conflicting peer dependency: history@4.10.1 npm error node_modules/history npm error peer history@"^4.7.2" from connected-react-router@6.9.3 npm error node_modules/connected-react-router npm error connected-react-router@"^6.9.3" from the root project npm error npm error Fix the upstream dependency conflict, or retry this command with --force or --legacy-peer-deps to accept an incorrect (and potentially broken) dependency resolution. npm error npm error npm error For a full report see: npm error C:\Users\Amy\AppData\Local\npm-cache\_logs\2026-04-24T12_14_36_555Z-eresolve-report.txt npm error A complete log of this run can be found in: C:\Users\Amy\AppData\Local\npm-cache\_logs\2026-04-24T12_14_36_555Z-debug-0.log
+The ERRESOLVE error is occurring because connected-react-router@6.9.3 strictly requires history@^4.7.2, but your project is currently using history@5.3.0. Connected React Router is not compatible with history v5, and because it is no longer actively maintained, it will likely never be updated to support it. 
+GitHub
+GitHub
+ +3
+Option 1: Migrate to redux-first-history (Recommended) 
+This is the modern, community-recommended path. redux-first-history was built as a faster, smaller alternative that supports both history v5 and React Router v6. 
+NPM
+NPM
+ +1
+Uninstall the old packages:
+npm uninstall connected-react-router history
+Install the new library:
+npm install redux-first-history history@5
+Update your store configuration:
+Instead of using the routerMiddleware from the old library, follow the Redux First History setup guide to create a reduxHistoryContext that provides a routerReducer and routerMiddleware. 
+GitHub
+GitHub
+ +1
+Option 2: Downgrade history to v4
+If you must stick with connected-react-router, you must downgrade your history version to match its requirements. 
+GitHub
+GitHub
+ +1
+Force the downgrade:
+npm install history@4.10.1
+Verify compatibility:
+If you are also using react-router-dom@6, note that it also requires history v5. Downgrading history will likely cause a conflict with the router itself. 
+GitHub
+GitHub
+ +1
+Option 3: Quick Fix (Not Recommended for Production)
+If you just want to bypass the error and don't care about potential runtime breakages:
+Run the installation with the --legacy-peer-deps flag:
+npm install --legacy-peer-deps
+Warning: This ignores the conflict but does not fix the underlying incompatibility. You will likely see bugs where the URL updates but the components do not re-render. 
+Stack Overflow
+Stack Overflow
+ +4
+Which version of React Router are you currently using, so I can provide the exact setup code for the best alternative?
+
+
+
+
+
+
+
+
+
+12 sites
+npm ERR! code ERESOLVE npm ERR! ERESOLVE unable to ...
+Apr 11, 2022 — * That's the package. json of an express app, not a react app, react-paypal-express-checkout needs react as a dependency. Usually ...
+
+
+Stack Overflow
+How To Fix the npm "Conflicting Peer Dependency" Error - DEV Community
+Jan 19, 2024 — Let's see them all. * Manually install the required peer dependencies. If npm fails because it cannot resolve the version of the p...
+
+
+DEV Community
+React router not working after upgrading to v 5 #804 - GitHub
+Jun 16, 2020 — Archivec2 commented. Archivec2. on Aug 15, 2021. Upgrading history to v5. 0.1 and react-router-dom to v6. 0.0-beta. 1 solved the i...
+
+
+GitHub
+Show all
+looking... thank you
+The most effective move depends on which version of React Router you are using. Since connected-react-router is deprecated and strictly tied to older history versions, you have two primary paths:
+Path A: Modernize (Recommended for React Router v6)
+If you are on React Router v6, connected-react-router will not work correctly because it doesn't support the required history@5. Swap it for redux-first-history, which is the current standard for syncing history with Redux [Option 1].
+Remove the old packages:
+npm uninstall connected-react-router history
+Install the modern replacements:
+npm install redux-first-history history@5
+Update your store: You will use createReduxHistoryContext from the new library to generate the proper middleware and reducer.
+Path B: Downgrade (If stuck on React Router v4/v5) 
+If you must use connected-react-router, you have to align your project with its strict requirement for history@4.
+Force the downgrade:
+npm install history@4.10.1
+Clean the cache: Sometimes npm gets "stuck" on the old tree.
+bash
+rm -rf node_modules package-lock.json
+npm cache clean --force
+npm install
+Use code with caution.
+ 
+DEV Community
+DEV Community
+Path C: The "Quick Fix" (Use with Caution) 
+If you are confident that your current code works despite the warning, you can tell npm to ignore the conflict: 
+Medium
+Medium
+ +1
+Command: npm install --legacy-peer-deps
+Why: This uses the old (pre-v7) resolution strategy where peer dependency mismatches were treated as warnings rather than hard errors. 
+www.angular.courses
+www.angular.courses
+ +2
+Which version of react-router-dom is listed in your package.json? I can help you with the specific code updates for either path.
+
+
+
+
+
+
+
+
+
+7 sites
+How I Solved Dependency Issues with --legacy-peer-deps in ...
+Jun 18, 2024 — After some searching online, I found out about the --legacy-peer-deps flag. This flag makes NPM ignore peer dependency conflicts a...
+
+
+Medium
+·
+Ritika Bajracharya
+How To Fix the npm "Conflicting Peer Dependency" Error
+Jan 19, 2024 — Fix the "Conflicting Peer Dependency" Error in npm * Manually install the required peer dependencies. If npm fails because it cann...
+
+
+DEV Community
+How to Fix npm Peer Dependency Conflicts - OneUptime
+Jan 22, 2026 — What Are Peer Dependencies? Peer dependencies declare what version of another package your package expects to work with: JSON Copy...
+
+
+OneUptime
+Show all
+If uninstalled connected-react-router but still get the following after a build: "Module not found: Error: Can't resolve 'connected-react-router' in 'D:\AHFRR\ahfrr\src'"
+This error means that even though you uninstalled the package, your code still contains an import or require statement pointing to connected-react-router. Webpack (your build tool) sees that reference, looks for the package in node_modules, and fails because it's no longer there. 
+Sentry
+Sentry
+ +1
+1. Global Search and Remove
+You need to find and remove every instance of this string in your source code.
+VS Code: Press Ctrl + Shift + F and search for connected-react-router.
+Common Locations:
+src/index.js or src/App.js: Look for ConnectedRouter.
+src/store/configureStore.js: Look for routerMiddleware or connectRouter.
+src/reducers/index.js: Look for where the router state was being added to your root reducer. 
+Stack Overflow
+Stack Overflow
+2. Clean Your Build Cache 
+Sometimes build tools (like react-scripts) cache old dependency information. After removing the imports, try a "clean" build: 
+Delete the build folder: Manually delete the build/ or dist/ directory.
+Clear npm cache: Run npm cache clean --force.
+Restart Dev Server: If you are using npm start, kill the process and restart it. 
+Stack Overflow
+Stack Overflow
+3. Deep Clean (The "Nuke" Option)
+If you've removed all imports but still see the error, your node_modules or package-lock.json might be out of sync. 
+Stack Overflow
+Stack Overflow
+ +2
+Delete node_modules folder.
+Delete package-lock.json file.
+Run npm install again. 
+YouTube
+YouTube
+ +2
+Did you replace the old routing logic with the redux-first-history code I provided earlier? If not, your app will likely crash once you remove those imports because it won't know how to handle the router state.
+
+
+
+
+
+
+
+
+
+10 sites
+Module not found: Can't resolve 'react-router-dom' - Treehouse
+Feb 2, 2019 — Try deleting and reinstalling your node modules rm -rf node_modules and then reinstalling, either npm install or yarn install if y...
+
+teamtreehouse.com
+Is there any way in vscode to know where the current the file ...
+Oct 30, 2019 — * 5 Answers. Sorted by: 16. You can do a right-click on every function / variable or class. Then you choose "Find all references" ...
+
+
+Stack Overflow
+Module Not Found error after NPM Install - Stack Overflow
+Jan 7, 2018 — 4 Answers. Sorted by: 3. Try the following , Delete all the dependencies of the project. Reinstall. rm -rf node_modules npm instal...
+
+Stack Overflow
+Show all
+hate to ask...but have one more. Can you help me resolve: Uncaught ReferenceError: createRootReducer is not defined at ./src/store/configureStore.js (configureStore.js:7:1) at options.factory (react refresh:37:1) at __webpack_require__ (bootstrap:28:1) at fn (hot module replacement:61:1) at hotRequire (react refresh:20:1) at ./src/index.js (ahfrrTypes.js:16:1) at options.factory (react refresh:37:1) at __webpack_require__ (bootstrap:28:1) at startup:7:1 at startup:7:1 (anonymous) @ configureStore.js:7 (anonymous) @ react refresh:37 __webpack_require__ @ bootstrap:28 (anonymous) @ hot module replacement:61 (anonymous) @ react refresh:20 (anonymous) @ ahfrrTypes.js:16 (anonymous) @ react refresh:37 __webpack_require__ @ bootstrap:28 (anonymous) @ startup:7 (anonymous) @ startup:7
+This ReferenceError means your configureStore.js file is trying to use a variable called createRootReducer that has not been defined or imported within that file. 
+Medium
+Medium
+ +1
+In older Redux setups, createRootReducer was a custom function often used to wrap your combined reducers with a router history. To fix this, you need to ensure the function is imported correctly from your reducers file. 
+Saga Slice
+Saga Slice
+How to Fix
+Check your Import:
+Look at the top of your configureStore.js. You are likely missing an import like this:
+javascript
+import createRootReducer from './reducers'; // Adjust path as needed
+Use code with caution.
+If your reducers/index.js uses a named export, the import should look like this:
+javascript
+import { createRootReducer } from './reducers';
+Use code with caution.
+Verify your Reducer File:
+Open src/reducers/index.js (or wherever your root reducer lives). Ensure it actually exports a function named createRootReducer. It usually looks like this:
+javascript
+import { combineReducers } from 'redux';
+// or from '@reduxjs/toolkit'
+
+const createRootReducer = (history) => combineReducers({
+  // your reducers here
+});
+
+export default createRootReducer;
+Use code with caution.
+Correct the Usage:
+In your configureStore.js, make sure you are passing the history object to that function:
+javascript
+const store = configureStore({
+  reducer: createRootReducer(history),
+  // ... rest of config
+});
+Use code with caution.
+ 
+Redux Toolkit
+Redux Toolkit
+ +2
+Why this happens
+In the code snippet you shared earlier, you were calling createRootReducer(history) inside the reducer field. JavaScript requires that any function you call must be "in scope"—either defined in the same file or imported from another. 
+Redux Toolkit
+Redux Toolkit
+ +3
+Are you using a specific folder structure (like src/store and src/reducers)? If so, double-check that the relative path in your import statement correctly points to your reducer file.
+
+
+
+
+
+
+
+
+
+7 sites
+Configuring Your Store | Redux
+Mar 4, 2025 — The fastest way to use is it is to just pass the root reducer function: * import { configureStore } from '@reduxjs/toolkit' * impo...
+
+
+Redux
+Usage Guide - Redux Toolkit
+Dec 11, 2024 — The simplest way to use it is to just pass the root reducer function as a parameter named reducer : import { configureStore } from...
+
+
+Redux Toolkit
+How to setup Redux Toolkit in React JS Project. - Medium
+Aug 19, 2021 — Create a store. ... Here, First we have to import configureStore from reduxjs/toolkit. and rootReducer from rootReducer file. root...
+
+
+Medium
+·
+Syket Bhattachergee
+Show all
+Would you please help me fix this function: import { configureStore } from '@reduxjs/toolkit'; import { combineReducers } from 'redux'; import ahfrrReducer from '../reducers/ahfrrReducer'; const store = configureStore({ // 1. Pass your combined root reducer reducer: combineReducers ({ router: history, ahfrr: ahfrrReducer }), // 2. Set initial state if provided preloadedState: initialState, // 3. Add custom middleware (Redux Toolkit adds Thunk by default) middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(logger), // 4. Add custom enhancers enhancers: (getDefaultEnhancers) => getDefaultEnhancers(), // DevTools is enabled by default in development }); export default store;
+To fix this function, you need to address three critical issues: you cannot pass the history object directly as a reducer, combineReducers is handled automatically by configureStore, and the history context must be initialized correctly to avoid the ReferenceError. 
+Redux Toolkit
+Redux Toolkit
+ +3
+Fixed configureStore.js
+This version uses the modern redux-first-history pattern, which is the standard replacement for the unmaintained library you were using. 
+GitHub
+GitHub
+ +1
+javascript
+import { configureStore } from '@reduxjs/toolkit';
+import { createBrowserHistory } from 'history';
+import { createReduxHistoryContext } from 'redux-first-history';
+import ahfrrReducer from '../reducers/ahfrrReducer';
+import logger from 'redux-logger'; // Ensure this is imported
+
+// 1. Initialize the history context
+const { createReduxHistory, routerMiddleware, routerReducer } = createReduxHistoryContext({ 
+  history: createBrowserHistory() 
+});
+
+const store = configureStore({
+  // 2. Redux Toolkit calls combineReducers automatically if you pass an object
+  reducer: {
+    router: routerReducer, // Use the specialized router reducer, NOT the history object
+    ahfrr: ahfrrReducer
+  },
+  
+  // 3. Set your initial state
+  preloadedState: window.__PRELOADED_STATE__ || {}, 
+
+  // 4. Add the specialized routerMiddleware
+  middleware: (getDefaultMiddleware) => 
+    getDefaultMiddleware().concat(routerMiddleware, logger),
+
+  // DevTools and Enhancers are handled automatically; only add if you have custom ones
+});
+
+// 5. Create the history object to be used in your Router component
+export const history = createReduxHistory(store);
+export default store;
+Use code with caution.
+Key Corrections Made:
+Router State: Replaced router: history with router: routerReducer. A Redux state must be a plain object, and the history object is a complex class instance that would break Redux.
+Automatic Combination: Removed the manual combineReducers call. configureStore accepts a mapping object and combines them for you internally.
+Middleware Inclusion: Added routerMiddleware. This is what allows your Redux actions to actually change the URL in the browser.
+History Export: Added export const history. You will need to import this specific history object into your index.js to wrap your app in a <HistoryRouter> (for React Router v6) or a standard <Router> (for v5). 
+NPM
+NPM
+ +4
+Do you need the specific component code for your index.js to connect this new history object to your React Router?
+
+
+
+
+
+
+
+
+
+9 sites
+configureStore - Redux Toolkit
+Mar 16, 2026 — Call combineReducers to combine your slices reducers into the root reducer function. Add the thunk middleware and called applyMidd...
+
+
+Redux Toolkit
+Changing from Redux to Redux Toolkit - Stack Overflow
+Oct 8, 2021 — __REDUX_DEVTOOLS_EXTENSION_COMPOSE__ , thunk , and routerMiddleware . The errors you are seeing happen because @redux/toolkit is o...
+
+Stack Overflow
+salvoravida/redux-first-history: Redux history binding ... - GitHub
+Dec 14, 2023 — Main Goal. While working with relatively large projects, it's quite common to use both redux and react-router . So you may have co...
+
+
+GitHub
+Show all
+Thank you for this. I will implement the above and reach back out if I have further issues.
+You're very welcome! That sounds like a solid plan. Moving to that modern setup should clear up those persistent version conflicts and middleware errors.
+One quick tip: when you update your index.js, make sure to import the new history we just exported from configureStore.js and pass it to your Router component. This ensures your Redux store and the browser URL stay perfectly in sync.
+I'll be here if you hit any snags with the implementation or the Router setup. Good luck!
+
+
+
+
+
+
+Show me the updated index.js for React Router v6
+
+Explain how `redux-first-history` works in Redux
+
+Why is `redux-logger` useful in a Redux setup?
+AI Mode response is readyAsk about
