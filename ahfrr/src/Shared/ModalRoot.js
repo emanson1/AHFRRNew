@@ -1,54 +1,19 @@
-import React, { useState } from 'react';
-import { makeStyles } from '@mui/styles';
-import { Dialog,Grid } from '@mui/material';
-import {connect} from 'react-redux';
-import { hideModal } from '../actions/ahfrrActions';
-import QuoteModal from '../Shared/Modal';
+import React from 'react';
+import Dialog from '@mui/material/Dialog'; // Or whatever your modal primitive is
+import QuoteModal from '../Modals/QuoteModal';
 
-function rand() {
-  return Math.round(Math.random() * 20) - 10;
+
+const MODAL_COMPONENTS = {
+  'quoteModal': QuoteModal
+  };
+
+export default function ModalRoot({ modalType, open, handleClose }) {
+  // If no type matches, render an empty fragment so Material-UI doesn't break
+  const SpecificModal = MODAL_COMPONENTS[modalType] || (() => null);
+
+  return (
+    <Dialog open={open} onClose={handleClose}>
+      <SpecificModal handleClose={handleClose} />
+    </Dialog>
+  );
 }
-
-const Modals= {
-       quoteModal: QuoteModal
-   };
-   
- 
-const ModalRoot = props => {
-  const background=props.background;
-  const modalProps=props.modalProps;
-  const modalType=props.modalType;
-  const instrument=props.modalProps.instrument;
-  const SpecificModal = Modals[modalType];
- 
- //const classes = makeStyles();
-
-
-
-
-return (
-  
-<Dialog
-  open={props.open}
-  onClose={props.hideModal}
-  aria-labelledby="simple-modal-title"
-  aria-describedby="simple-modal-description"
->
-<div>
-<SpecificModal handleClose={props.hideModal} modalProps={modalProps}  />
-</div>
-</Dialog>
-
-);
-}
-
-const mapStateToProps = (state) => ({
-  modalProps: state.ahfrr.modalProps,
-  modalType: state.ahfrr.modalProps.modalType,
-});
-
-const mapDispatchToProps = (dispatch) => ({
-  hideModal: () => dispatch(hideModal()),
-});
-export default connect(mapStateToProps, mapDispatchToProps)(ModalRoot);
-

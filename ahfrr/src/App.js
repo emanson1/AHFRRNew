@@ -10,7 +10,7 @@ import MainPage from './Pages/MainPage';
 import { Routes, Route } from 'react-router-dom';
 import { makeStyles } from '@mui/styles';
 function App(props) {
-  const { modalProps } = props;
+  const { modalProps = {} } = props;
   const { modalType, open } = modalProps;
   
   const [openNav, setOpen] = useState(false);
@@ -48,7 +48,7 @@ function App(props) {
         Gallery={<Gallery />}
       /> 
       
-      {modalType && <ModalRoot handleClose={props.hideModal} open={open} />}
+  <ModalRoot modalType={modalType} handleClose={props.hideModal} open={open} />
     </React.Fragment>
         
   );
