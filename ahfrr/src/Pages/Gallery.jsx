@@ -15,9 +15,8 @@ const Gallery = props => {
     setListOfImages(images);
   }, []);
 
-  // Modernized theme token design configuration values
   const iconResponsiveStyles = {
-    color: '#ffcc00', // Switched to matching gold brand color tone for strong layout visibility
+    color: '#ffcc00', 
     fontSize: { xs: '2.5rem', sm: '3.5rem', md: '4.5rem', lg: '5rem' },
     flexShrink: 0
   };
@@ -30,18 +29,33 @@ const Gallery = props => {
     lineHeight: 1.3
   };
 
-  const imageCardStyles = {
-    border: '3px solid #003569',
-    borderRadius: '4px',
-    width: '100%',
-    aspectRatio: '1 / 1', // Guarantees pixel-perfect squares across all devices
-    objectFit: 'cover',
-    boxShadow: '0 4px 12px rgba(0,0,0,0.15)',
-    transition: 'transform 0.2s ease-in-out, border-color 0.2s ease-in-out',
+  // Thumbnail Wrapper Box Card configuration styling rules
+  const thumbnailWrapperStyles = {
+    position: 'relative',
+    display: 'block',
+    overflow: 'hidden',
+    borderRadius: '6px',
+    border: '2px solid #003569',
+    aspectRatio: '1 / 1', 
+    boxShadow: '0 2px 8px rgba(0,0,0,0.2)',
+    transition: 'all 0.25s ease-in-out',
+    cursor: 'pointer',
+    backgroundColor: '#002244',
     '&:hover': {
-      transform: 'scale(1.03)',
-      borderColor: '#ffcc00'
+      borderColor: '#ffcc00',
+      boxShadow: '0 4px 16px rgba(255, 204, 0, 0.3)',
+      '& img': {
+        transform: 'scale(1.08)',
+      }
     }
+  };
+
+  const thumbnailImageStyles = {
+    width: '100%',
+    height: '100%',
+    objectFit: 'cover',
+    transition: 'transform 0.25s ease-in-out',
+    display: 'block'
   };
 
   return (
@@ -49,45 +63,60 @@ const Gallery = props => {
       
       {/* Header Area Container */}
       <Grid container>
-        <Grid item xs={12} sm={11} md={10} sx={{ mx: 'auto', px: 2 }}>
+        <Grid item xs={12} sm={11} md={11} lg={11} sx={{ mx: 'auto', px: 2 }}>
           <Box sx={{ display: 'flex', gap: { xs: 2, sm: 4 }, alignItems: 'center' }}>
             <CameraIcon sx={iconResponsiveStyles} />
             <Typography sx={headingResponsiveStyles} variant="h4" component="h2">
-              Cfc Hardwood Gallery:
+              CFC Hardwood Gallery:
             </Typography>
           </Box>
         </Grid>
       </Grid>
 
-      {/* Styled Structural Section Divider */}
-      <Grid container sx={{ mt: { xs: 2, md: 4 }, mb: { xs: 3, md: 5 } }}>
-        <Grid item xs={12} sm={11} md={10} sx={{ mx: 'auto', px: 2 }}>
+      {/* Section Divider Line */}
+      <Grid container sx={{ mt: { xs: 2, md: 4 }, mb: { xs: 3, md: 4 } }}>
+        <Grid item xs={12} sm={11} md={11} lg={11} sx={{ mx: 'auto', px: 2 }}>
           <Box component="hr" sx={{ borderColor: 'rgba(255, 255, 255, 0.15)', m: 0 }} />
         </Grid>
       </Grid>
 
-      {/* Main Image Gallery Layout Board */}
+      {/* Main Compressed Image Thumbnail Grid Layout Area */}
       <Grid container>
-        <Grid item xs={12} sm={11} md={10} sx={{ mx: 'auto', px: 2 }}>
-          <Grid container spacing={{ xs: 2, sm: 3 }}>
-            
+        <Grid item xs={12} sm={11} md={11} lg={11} sx={{ mx: 'auto', px: 2 }}>
+          <Grid 
+            container 
+            spacing={{ xs: 1.5, sm: 2 }} 
+            columns={{ xs: 12, sm: 12, md: 10, lg: 12 }} // Maps out uniform fractional column distributions
+          >
             {listOfImages.map((image, index) => {
               const imgSrc = image?.default || image;
               
               return (
-                <Grid item key={index} xs={6} sm={4} md={3}>
-                  <a href={imgSrc} target="_blank" rel="noreferrer" style={{ textDecoration: 'none' }}>
+                <Grid 
+                  item 
+                  key={index} 
+                  xs={4}      // Yields 3 thumbnails per row on small phones
+                  sm={3}      // Yields 4 thumbnails per row on tablet widths
+                  md={2}      // Yields 5 thumbnails per row on medium screen displays
+                  lg={2}      // Yields 6 thumbnails per row on widescreen viewports
+                >
+                  <Box 
+                    component="a" 
+                    href={imgSrc} 
+                    target="_blank" 
+                    rel="noreferrer" 
+                    sx={thumbnailWrapperStyles}
+                  >
                     <Box 
                       component="img" 
                       src={imgSrc} 
-                      alt={`Hardwood service project showcase ${index + 1}`} 
-                      sx={imageCardStyles} 
+                      alt={`Hardwood flooring thumbnail layout sample ${index + 1}`} 
+                      sx={thumbnailImageStyles} 
                     />
-                  </a>
+                  </Box>
                 </Grid>
               );
             })}
-
           </Grid>
         </Grid>
       </Grid>

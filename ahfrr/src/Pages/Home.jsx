@@ -25,8 +25,9 @@ const Home = props => {
     pt: 2, 
     pl: 3,
     fontSize: { xs: '0.95rem', sm: '1.1rem', md: '1.2rem' },
-    fontWeight: 'normal',
-    textShadow: 'none',
+    fontWeight: 'bold',
+textShadow: '-1px 0 black, 0 2px black, 1px 0 black, 0 -1px black',
+
     color: '#e0e0e0',
     display: 'flex',
     flexDirection: 'column',
@@ -44,38 +45,23 @@ const Home = props => {
         <Grid item xs={12} sm={11} md={10} sx={{ mx: 'auto', px: 2 }}>
           <Box sx={{ display: 'flex', gap: { xs: 2, sm: 4 }, alignItems: 'flex-start' }}>
             <HomeIcon sx={iconResponsiveStyles} />
-            
             <Box sx={{ flexGrow: 1 }}>
               <Typography sx={headingResponsiveStyles} variant="h4" component="h2">
-                CFC Hardwood is:
+                AHFRR Hardwood is:
               </Typography>
               <Box component="ul" sx={listContainerStyles}>
-                <li>Family owned business serving the greater Columbia area for sixteen (16) years</li>
-                <li>Exceptional work and honest pricing, with 100s of satisfied customers and a 5 star Google rating</li>
-              </Box>
+                <li>Artisan Hardwood Floor Refinishing and Restoration (AHFRR) is a family-owned and operated hardwood floor refinishing business</li>
+                <li>We have thirty (30) years experience in the the flooring industry.</li>
+                <li>We specialize in hardwood floor refinishing, resurfacing, and repair. </li>
+                <li>We follow all new industry standards and use quality commercial grade flooring products.</li>
+                <li>Artisan Hardwood Floor Refinishing and Restoration (AHFRR) is here for you and all of your hardwood needs.</li>
             </Box>
+                </Box>
           </Box>
         </Grid>
       </Grid>
 
-      {/* Second Section Container */}
-      <Grid container>
-        <Grid item xs={12} sm={11} md={10} sx={{ mx: 'auto', px: 2 }}>
-          <Box sx={{ display: 'flex', gap: { xs: 2, sm: 4 }, alignItems: 'flex-start' }}>
-            <AccountBoxIcon sx={iconResponsiveStyles} />
-            
-            <Box sx={{ flexGrow: 1 }}>
-              <Typography sx={headingResponsiveStyles} variant="h4" component="h2">
-                About CFC Hardwood Services LLC:
-              </Typography>
-              <Box component="ul" sx={listContainerStyles}>
-                <li>CofC Hardwood LLC was founded in 2010 by William Miller to provide the absolute best in industry hardwood floor refinishing</li>
-              </Box>
-            </Box>
-          </Box>
-        </Grid>
-      </Grid>
-
+      
     </Box>
   );
 }

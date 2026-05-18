@@ -6,7 +6,7 @@ import EngineeringIcon from '@mui/icons-material/Engineering';
 import CameraIcon from '@mui/icons-material/CameraAlt';
 import GoogleIcon from '@mui/icons-material/Google';
 import FacebookIcon from '@mui/icons-material/Facebook';
-import CofCLogoSmall from '../Images/CFCLogoSmall.png';
+import AHFRRLogoSmall from '../Images/AHFRR Logo.png';
 import { showModal, hideModal } from '../actions/ahfrrActions';
 import { connect } from 'react-redux';
 import { blue } from '@mui/material/colors';
@@ -30,7 +30,7 @@ const useStyles = makeStyles((theme) => ({
         fontSize: 30,
     },
     subContainerBackground: {
-        backgroundImage: `url(${CofCLogoSmall})`,
+        backgroundImage: `url(${AHFRRLogoSmall})`,
         backgroundSize: 'cover',
     },
     subContainerOpacity: {

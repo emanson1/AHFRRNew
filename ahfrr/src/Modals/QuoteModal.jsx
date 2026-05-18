@@ -2,14 +2,12 @@ import React from 'react';
 import { Formik, Form, Field } from 'formik';
 import { TextField as FormikTextField } from 'formik-material-ui';
 import * as Yup from 'yup';
-// Modern MUI imports
 import { Grid, Typography, Button, Box } from '@mui/material'; 
-import CofCLogoSmall from '../Images/CFCLogoSmall.png';
+import AHFRRLogoSmall from '../Images/AHFRR Logo.png';
 import emailjs from '@emailjs/browser';
 
 export default function QuoteModal(props) {
   const { handleClose } = props;
-
   const SERVICE_ID = (typeof process !== 'undefined' && process.env?.REACT_APP_EMAILJS_SERVICE_ID) || '';
   const TEMPLATE_ID = (typeof process !== 'undefined' && process.env?.REACT_APP_EMAILJS_TEMPLATE_ID) || '';
   const PUBLIC_KEY = (typeof process !== 'undefined' && process.env?.REACT_APP_EMAILJS_PUBLIC_KEY) || '';
@@ -71,7 +69,7 @@ export default function QuoteModal(props) {
         if (attachments[x].Data) {
           images.push({
             filename: attachments[x].FileName,
-            content: attachments[x].Data.split(',')[1],
+            content: attachments[x].Data.split(','),
             encoding: 'base64',
             contentType: fileType,
           });
@@ -126,15 +124,16 @@ export default function QuoteModal(props) {
       validationSchema={getSchema()}
     >
       {({ isSubmitting }) => (
-        <Form>
-          {/* Main Grid Wrapper */}
+        <Form style={{ width: '100%' }}>
+          {/* Main Grid Wrapper - Configured with width: '100%' */}
           <Grid 
             container 
             sx={{ 
-              overflow: 'none', 
+              overflow: 'hidden', 
               border: '2px solid #ffcc00', 
-              p: 0.6, // MUI padding multiplier (5px roughly equals 0.6)
-              justifyContent: 'center' 
+              p: 0.6, 
+              width: '100%',
+              backgroundColor: 'white'
             }}
           >
             <Grid item xs={12}>
@@ -148,28 +147,21 @@ export default function QuoteModal(props) {
                   backgroundColor: 'white',
                   textShadow: '-1px 0 #8C92B4, 0 3px #8C92B4, 1px 0 #8C92B4, 0 -1px #8C92B4',
                   fontSize: { xs: '23px', sm: '30px', md: '35px', lg: '40px', xl: '45px' },
-                  // Handle responsive text shadows
-                  sx: (theme) => ({
-                    [theme.breakpoints.down('sm')]: {
-                      textShadow: '-1px 0 #8C92B4, 0 1px #8C92B4, 1px 0 #8C92B4, 0 -1px #8C92B4',
-                    }
-                  })
                 }}
               >
-                CFC Hardwood Floors LLC
+                Artisan Hardwood Floor Refinishing
               </Typography>
             </Grid>
 
-            <Grid container direction="row" alignItems="center">
+            <Grid container direction="row" sx={{ width: '100%' }}>
               <Grid item xs={12}>
                 <Typography 
-                  variant="h6"
+                  variant="h6" 
                   sx={{
                     px: 0.6,
                     backgroundColor: '#ffcc00',
                     color: '#003569',
                     textAlign: 'center',
-                    opacity: 1,
                     borderBottom: '2px solid #003569',
                     borderTop: '2px solid #003569',
                     fontSize: { xs: '11px', sm: '20px' }
@@ -180,99 +172,87 @@ export default function QuoteModal(props) {
               </Grid>
             </Grid>
 
-            {/* Sub-Container Background Area */}
-            <Grid 
-              container 
-              sx={{
-                backgroundImage: `url(${CofCLogoSmall})`,
-                backgroundSize: { xs: '300px 500px', sm: 'cover' }
-              }}
-            >
-              <Grid item xs={12}>
-                <Box 
-                  sx={{
-                    backgroundColor: 'white',
-                    opacity: 0.85,
-                    p: { xs: '2px', sm: '10px' }
-                  }}
-                >
-                  <Box sx={{ minHeight: '16px' }} /> {/* Cleaner alternative to <br /> */}
-                  
-                  <Grid container direction="row" alignItems="center" spacing={1}>
-                    <Grid item xs={12}>
-                      <Typography 
-                        variant="h6"
-                        sx={{
-                          fontWeight: 'bold',
-                          fontSize: { xs: '17px', sm: '22px' }
-                        }}
-                      >
-                        Please supply your name:
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field component={FormikTextField} variant="outlined" label="Name" size="small" name="customername" fullWidth />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Typography 
-                        variant="h6"
-                        sx={{
-                          fontWeight: 'bold',
-                          fontSize: { xs: '17px', sm: '22px' }
-                        }}
-                      >
-                        Please enter a valid email address (or phone number):
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field component={FormikTextField} variant="outlined" label="Email" size="small" name="to_email" fullWidth />
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field component={FormikTextField} variant="outlined" label="Phone" size="small" name="customerphone" fullWidth />
-                    </Grid>
-
-                    <Grid item xs={12}>
-                      <Typography 
-                        variant="h6"
-                        sx={{
-                          fontWeight: 'bold',
-                          fontSize: { xs: '17px', sm: '22px' }
-                        }}
-                      >
-                        Please let us know what we can do to help:
-                      </Typography>
-                    </Grid>
-                    <Grid item xs={12}>
-                      <Field component={FormikTextField} multiline variant="outlined" label="Comments" size="small" name="comments" fullWidth minRows={3} />
-                    </Grid>
+            {/* Sub-Container Background Area - Expanded to width: '100%' */}
+            <Grid item xs={12} sx={{ width: '100%' }}>
+              <Box 
+                sx={{
+                  position: 'relative',
+                  width: '100%',
+                  boxSizing: 'border-box',
+                  p: { xs: '16px', sm: '24px' },
+                  backgroundColor: 'rgba(255, 255, 255, 0.88)', 
+                  '&::before': {
+                    content: '""',
+                    position: 'absolute',
+                    top: 0,
+                    left: 0,
+                    right: 0,
+                    bottom: 0,
+                    zIndex: 0,
+                    backgroundImage: `url(${AHFRRLogoSmall})`,
+                    backgroundSize: { xs: '260px auto', sm: 'contain' },
+                    backgroundPosition: 'center',
+                    backgroundRepeat: 'no-repeat',
+                    opacity: 0.25, 
+                  }
+                }}
+              >
+                {/* Form fields wrapper aligned to expand across full container margins */}
+                <Grid container direction="row" alignItems="center" spacing={2} sx={{ position: 'relative', zIndex: 1, width: '100%', m: 0 }}>
+                  <Grid item xs={12} sx={{ pl: '0px !important' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: { xs: '16px', sm: '20px' }, color: '#003569' }}>
+                      Please supply your name:
+                    </Typography>
                   </Grid>
-                </Box>
-              </Grid>
+                  <Grid item xs={12} sx={{ pl: '0px !important' }}>
+                    <Field component={FormikTextField} variant="outlined" label="Name" size="small" name="customername" fullWidth />
+                  </Grid>
+
+                  <Grid item xs={12} sx={{ pl: '0px !important' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: { xs: '16px', sm: '20px' }, color: '#003569' }}>
+                      Please enter a valid email address (or phone number):
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sx={{ pl: '0px !important' }}>
+                    <Field component={FormikTextField} variant="outlined" label="Email" size="small" name="to_email" fullWidth />
+                  </Grid>
+                  <Grid item xs={12} sx={{ pl: '0px !important' }}>
+                    <Field component={FormikTextField} variant="outlined" label="Phone" size="small" name="customerphone" fullWidth />
+                  </Grid>
+
+                  <Grid item xs={12} sx={{ pl: '0px !important' }}>
+                    <Typography variant="h6" sx={{ fontWeight: 'bold', fontSize: { xs: '16px', sm: '20px' }, color: '#003569' }}>
+                      Please let us know what we can do to help:
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sx={{ pl: '0px !important' }}>
+                    <Field component={FormikTextField} multiline variant="outlined" label="Comments" size="small" name="comments" fullWidth minRows={3} />
+                  </Grid>
+                </Grid>
+              </Box>
             </Grid>
 
             {/* Submit Button Grid Area */}
-            <Grid item xs={12} sx={{ textAlign: 'center', mt: 2 }}>
+            <Grid item xs={12} sx={{ textAlign: 'center', mt: 3, mb: 1, width: '100%' }}>
               <Button 
                 type="submit" 
                 disabled={isSubmitting} 
-                variant="contained"
-                sx={{
-                  width: '90%',
-                  backgroundColor: 'green',
-                  fontSize: '25px',
-                  color: 'white',
-                  '&:hover': {
-                    backgroundColor: 'darkgreen',
-                  },
+                variant="contained" 
+                sx={{ 
+                  width: '95%', 
+                  backgroundColor: 'green', 
+                  fontSize: '22px', 
+                  color: 'white', 
+                  fontWeight: 'bold',
+                  '&:hover': { backgroundColor: 'darkgreen' } 
                 }}
               >
                 {isSubmitting ? 'Sending...' : 'Send Info'}
               </Button>
             </Grid>
 
-            <Grid item xs={12} sx={{ my: 1 }}>
-              <Box component="hr" sx={{ borderColor: 'rgba(0, 0, 0, 0.12)' }} />
+            <Grid item xs={12} sx={{ width: '100%' }}>
+              <Box component="hr" sx={{ borderColor: 'rgba(0, 0, 0, 0.12)', m: 0, width: '100%' }} />
             </Grid>
           </Grid>
         </Form>
