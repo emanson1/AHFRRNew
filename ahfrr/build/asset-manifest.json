@@ -1,20 +1,12 @@
 {
   "files": {
-    "main.css": "./static/css/main.bfe620ab.css",
-    "main.js": "./static/js/main.6438c8da.js",
-    "static/media/floorpic2.png": "./static/media/floorpic2.63a3d5818378c8bc5bae.png",
-    "static/media/2020-11-05.png": "./static/media/2020-11-05.b46ef5650355f54f6644.png",
-    "static/media/2019-10-10 (2).png": "./static/media/2019-10-10 (2).fb9abe495dd9d0dfdc67.png",
-    "static/media/2019-10-10.png": "./static/media/2019-10-10.9b67ca34f07cdf597de0.png",
-    "static/media/2019-10-10 (1).png": "./static/media/2019-10-10 (1).967deb8c38721ea500a2.png",
-    "static/media/2020-11-05 (1).png": "./static/media/2020-11-05 (1).78b3630ac3dfcb928316.png",
-    "static/media/CFCLogo.png": "./static/media/CFCLogo.704408cfef55fdda6a75.png",
+    "main.js": "./static/js/main.5638dcd7.js",
+    "static/media/1000007324.jpg": "./static/media/1000007324.f5214cfff1ad59ba9464.jpg",
+    "static/media/AHFRR Logo.png": "./static/media/AHFRR Logo.6b4c1bcc18d755d14c35.png",
     "index.html": "./index.html",
-    "main.bfe620ab.css.map": "./static/css/main.bfe620ab.css.map",
-    "main.6438c8da.js.map": "./static/js/main.6438c8da.js.map"
+    "main.5638dcd7.js.map": "./static/js/main.5638dcd7.js.map"
   },
   "entrypoints": [
-    "static/css/main.bfe620ab.css",
-    "static/js/main.6438c8da.js"
+    "static/js/main.5638dcd7.js"
   ]
 }
