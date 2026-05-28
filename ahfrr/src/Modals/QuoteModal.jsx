@@ -13,7 +13,7 @@ export default function QuoteModal(props) {
   const PUBLIC_KEY = (typeof process !== 'undefined' && process.env?.REACT_APP_EMAILJS_PUBLIC_KEY) || '';
 
   const sendEmail = (object, actions) => {
-    console.log('ServiceId=' + SERVICE_ID + 'TEMPLATE_ID' + TEMPLATE_ID);
+    //console.log('ServiceId=' + SERVICE_ID + 'TEMPLATE_ID' + TEMPLATE_ID);
     emailjs
       .send(SERVICE_ID, TEMPLATE_ID, object, { publicKey: PUBLIC_KEY })
       .then(
