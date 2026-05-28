@@ -11,7 +11,7 @@ export default function QuoteModal(props) {
   const SERVICE_ID = (typeof process !== 'undefined' && process.env?.REACT_APP_EMAILJS_SERVICE_ID) || '';
   const TEMPLATE_ID = (typeof process !== 'undefined' && process.env?.REACT_APP_EMAILJS_TEMPLATE_ID) || '';
   const PUBLIC_KEY = (typeof process !== 'undefined' && process.env?.REACT_APP_EMAILJS_PUBLIC_KEY) || '';
-
+// forcing a check in of this file
   const sendEmail = (object, actions) => {
     console.log('SERVICE_ID:' + SERVICE_ID + ' -  TEMPLATE_ID:' + TEMPLATE_ID + '  -   PUBLIC_KEY:' + PUBLIC_KEY);
     emailjs
