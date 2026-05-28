@@ -13,6 +13,7 @@ export default function QuoteModal(props) {
   const PUBLIC_KEY = (typeof process !== 'undefined' && process.env?.REACT_APP_EMAILJS_PUBLIC_KEY) || '';
 
   const sendEmail = (object, actions) => {
+    console.log('ServiceId=' + SERVICE_ID + 'TEMPLATE_ID' + TEMPLATE_ID);
     emailjs
       .send(SERVICE_ID, TEMPLATE_ID, object, { publicKey: PUBLIC_KEY })
       .then(
@@ -78,7 +79,7 @@ export default function QuoteModal(props) {
       values.attachmentStr = attStr;
       let emailaddress = values.to_email;
       if (!emailaddress || emailaddress.length === 0) {
-        values.to_email = 'wmfloorman75@gmail.com';
+        values.to_email = 'floorman446@gmail.com';
       }
       sendEmail(values, actions);
     } catch (ex) {
